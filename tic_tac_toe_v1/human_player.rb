@@ -8,7 +8,7 @@ class HumanPlayer
     attr_reader :mark
 
     def get_position
-        puts "Enter coordinates to place a #{mark} on the grid, using two numbers separated by a comma:"
+        puts "Enter coordinates to place your #{mark} on the grid, using two numbers separated by a comma:"
         entry = gets.chomp
         position = []
         entry.split(",").each { |num| position << num }
@@ -18,7 +18,7 @@ class HumanPlayer
 
 end
 
-roland = HumanPlayer.new(:>)
-p roland.mark
-puts 
-p roland.get_position
+# roland = HumanPlayer.new(:>)
+# p roland.mark
+# puts 
+# p roland.get_position

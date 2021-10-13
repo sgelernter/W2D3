@@ -27,7 +27,11 @@ class Board
 
     def place_mark(position, mark)
         if self.valid?(position)
-            self[position] = mark
+            if self.empty?(position) 
+                self[position] = mark
+            else 
+                puts "That spot is taken, don't be rude"
+            end
         else
             puts "Sorry, that's not a valid spot on the board, dummy"
         end
@@ -41,7 +45,6 @@ class Board
             end
             puts next_line
         end
-        # why does this throw an error when using "print" rather than "p" or "puts"? 
     end
 
     def win_row?(mark)
