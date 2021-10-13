@@ -3,24 +3,18 @@ require_relative "./board.rb"
 require_relative "./human_player.rb"
 
 class Game
-    def initialize(mark_1, mark_2, board_size)
+    def initialize(*marx, board_size)
         @board = Board.new(board_size)
-        @mark_1 = mark_1
-        @mark_2 = mark_2
-        @player_1 = HumanPlayer.new(mark_1)
-        @player_2 = HumanPlayer.new(mark_2)
-        @current_player = player_1
+        @all_players = marx.map { |mark| HumanPlayer.new(mark) }
+        @current_player = all_players.first
     end
 
-    attr_reader :mark_1, :mark_2, :player_1, :player_2, :board
-    attr_accessor :current_player
+    attr_reader :all_marks, :board
+    attr_accessor :current_player, :all_players
 
     def switch_turn
-        if @current_player == player_1
-            self.current_player = player_2 
-        else
-            self.current_player = player_1
-        end
+        self.all_players.rotate!
+        self.current_player = all_players.first
     end
 
     def play 
@@ -42,5 +36,5 @@ class Game
     end
 end
 
-game = Game.new(:X, :O, 10)
+game = Game.new(:B, :D, :S, :M, 5)
 game.play 
