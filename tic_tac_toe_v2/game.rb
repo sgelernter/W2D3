@@ -36,5 +36,5 @@ class Game
     end
 end
 
-game = Game.new(:B, :D, :S, :M, 5)
+game = Game.new(:D, :S, :M, 5)
 game.play 
