@@ -4,13 +4,21 @@ require_relative "./human_player.rb"
 require_relative "./computer_player.rb"
 
 class Game
-    def initialize(*marx, board_size)
+    def initialize(board_size, players_hash)
+        #why does the hash need to go 2nd? 
         @board = Board.new(board_size)
-        @all_players = marx.map { |mark| HumanPlayer.new(mark) }
+        @all_players = []
+        players_hash.each do |symbol, robot|
+            if robot 
+                self.all_players << ComputerPlayer.new(symbol)
+            else
+                self.all_players << HumanPlayer.new(symbol)
+            end
+        end
         @current_player = all_players.first
     end
 
-    attr_reader :all_marks, :board
+    attr_reader :board, :players_hash
     attr_accessor :current_player, :all_players
 
     def switch_turn
@@ -21,7 +29,8 @@ class Game
     def play 
         board.print
         while board.empty_positions?
-            position = current_player.get_position
+            legal = board.legal_positions
+            position = current_player.get_position(legal)
             board.place_mark(position, current_player.mark)
             board.print
             if board.win?(current_player.mark)
@@ -37,5 +46,5 @@ class Game
     end
 end
 
-game = Game.new(:D, :S, :M, 5)
-game.play 
+# game = Game.new(8, D: false, S: false, M: true)
+# game.play 
